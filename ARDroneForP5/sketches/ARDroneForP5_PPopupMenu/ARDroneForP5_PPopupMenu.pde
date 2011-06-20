@@ -1,5 +1,12 @@
 /**
   Requirement
+  You need to add Picking.jar.
+  (http://code.google.com/p/processing-picking-library/)
+  
+  You need to add NyAR4psg.jar and NyARToolkit.jar.
+  You need to put camera_para.dat and patt.hiro into "data" folder.
+  (http://nyatla.jp/nyartoolkit/wiki/index.php?NyAR4psg)
+
   You need to add PPopupMenu.jar.
   (https://github.com/hixi-hyi/ppopupmenu)
 */

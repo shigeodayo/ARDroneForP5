@@ -4,7 +4,8 @@
 	<property name="src" location="src"/>
 	<property name="output" location="bin"/>
 	<property name="jarout" location=""/>
-	<property name="jarname" value="ARDroneLib1.0.jar"/>
+	<property name="jarname" value="ARDroneForP5.jar"/>
+	<property name="packagename" value="com/shigeodayo/ardrone"/>
 
 	<target name="main" depends="init, compile, compress">
 		<echo>
@@ -21,7 +22,7 @@
 	</target>
 
 	<target name="compress">
-		<jar destfile="${jarout}/${jarname}" basedir="${output}" includes="**/*.class" >
+		<jar destfile="${jarout}/${jarname}" basedir="${output}" includes="${packagename}/**" >
 			<fileset dir="./">
 				<include name="lib/core.jar"/>
 			</fileset>

@@ -1,3 +1,8 @@
+/**
+  Requirement
+  You need to add PPopupMenu.jar.
+  (https://github.com/hixi-hyi/ppopupmenu)
+*/
 import processing.click.*;
 
 import picking.*;

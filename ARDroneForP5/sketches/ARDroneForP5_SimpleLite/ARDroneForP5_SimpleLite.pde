@@ -1,3 +1,9 @@
+/**
+  Requirement
+  You need to add NyAR4psg.jar and NyARToolkit.jar.
+  You need to put camera_para.dat and patt.hiro into "data" folder.
+  (http://nyatla.jp/nyartoolkit/wiki/index.php?NyAR4psg)
+*/
 import com.shigeodayo.ardrone.manager.*;
 import com.shigeodayo.ardrone.navdata.*;
 import com.shigeodayo.ardrone.utils.*;

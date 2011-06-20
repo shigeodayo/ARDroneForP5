@@ -11,7 +11,6 @@ import com.shigeodayo.ardrone.processing.*;
 import com.shigeodayo.ardrone.command.*;
 import com.shigeodayo.ardrone.*;
 import com.shigeodayo.ardrone.video.*;
-import com.shigeodayo.ardrone.sample.*;
 
 import processing.video.*;
 import jp.nyatla.nyar4psg.*;
@@ -102,13 +101,13 @@ void keyPressed(){
     }else if(key=='d'){
       ardrone.down();
     }else if(key=='1'){
-      ardrone.setCameraHorizontal();
+      ardrone.setHorizontalCamera();
     }else if(key=='2'){
-      ardrone.setCameraHorizontalInVertical();//前カメラとお腹カメラ
+      ardrone.setHorizontalCameraWithVertical();//前カメラとお腹カメラ
     }else if(key=='3'){
-      ardrone.setCameraVertical();//お腹カメラ
+      ardrone.setVerticalCamera();//お腹カメラ
     }else if(key=='4'){
-      ardrone.setCameraVerticalInHorizontal();//お腹カメラと前カメラ
+      ardrone.setVerticalCameraWithHorizontal();//お腹カメラと前カメラ
     }else if(key=='5'){
       ardrone.toggleCamera();//次のカメラ
     }

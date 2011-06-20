@@ -28,10 +28,10 @@ public interface ARDroneInterface {
 	public void start();
 	
 	//camera
-	public void setCameraHorizontal();//setFrontCameraStreaming()
-	public void setCameraVertical();//setBellyCameraStreaming()
-	public void setCameraHorizontalInVertical();//setFrontCameraWithSmallBellyStreaming()
-	public void setCameraVerticalInHorizontal();//setBellyCameraWithSmallFrontStreaming()
+	public void setHorizontalCamera();//setFrontCameraStreaming()
+	public void setVerticalCamera();//setBellyCameraStreaming()
+	public void setHorizontalCameraWithVertical();//setFrontCameraWithSmallBellyStreaming()
+	public void setVerticalCameraWithHorizontal();//setBellyCameraWithSmallFrontStreaming()
 	public void toggleCamera();
 	
 	//control command

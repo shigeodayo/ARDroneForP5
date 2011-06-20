@@ -158,27 +158,27 @@ public class ARDrone implements ARDroneInterface{
 	}
 
 	@Override
-	public void setCameraHorizontal() {
+	public void setHorizontalCamera() {
 		if(manager!=null)
-			manager.setCameraHorizontal();
+			manager.setHorizontalCamera();
 	}
 
 	@Override
-	public void setCameraVertical() {
+	public void setVerticalCamera() {
 		if(manager!=null)
-			manager.setCameraVertical();
+			manager.setVerticalCamera();
 	}
 
 	@Override
-	public void setCameraHorizontalInVertical() {
+	public void setHorizontalCameraWithVertical() {
 		if(manager!=null)
-			manager.setCameraHorizontalInVertical();
+			manager.setHorizontalCameraWithVertical();
 	}
 
 	@Override
-	public void setCameraVerticalInHorizontal() {
+	public void setVerticalCameraWithHorizontal() {
 		if(manager!=null)
-			manager.setCameraVerticalInHorizontal();
+			manager.setVerticalCameraWithHorizontal();
 	}
 
 	@Override

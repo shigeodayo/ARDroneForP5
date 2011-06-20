@@ -150,25 +150,25 @@ public class ARDroneTest extends JFrame{
 					}else
 						ardrone.backward();
 					break;
-				case KeyEvent.VK_1://hori
-					ardrone.setCameraHorizontal();
-					System.out.println("1");
+				case KeyEvent.VK_1:
+					ardrone.setHorizontalCamera();
+					//System.out.println("1");
 					break;
-				case KeyEvent.VK_2://large hori, small vert
-					ardrone.setCameraHorizontalInVertical();
-					System.out.println("2");
+				case KeyEvent.VK_2:
+					ardrone.setHorizontalCameraWithVertical();
+					//System.out.println("2");
 					break;
-				case KeyEvent.VK_3://large vert, small hori
-					ardrone.setCameraVertical();
-					System.out.println("3");
+				case KeyEvent.VK_3:
+					ardrone.setVerticalCamera();
+					//System.out.println("3");
 					break;
-				case KeyEvent.VK_4://vert
-					ardrone.setCameraVerticalInHorizontal();
-					System.out.println("4");
+				case KeyEvent.VK_4:
+					ardrone.setVerticalCameraWithHorizontal();
+					//System.out.println("4");
 					break;
-				case KeyEvent.VK_5://switch camera
+				case KeyEvent.VK_5:
 					ardrone.toggleCamera();
-					System.out.println("5");
+					//System.out.println("5");
 					break;
 				case KeyEvent.VK_R:
 					ardrone.spinRight();

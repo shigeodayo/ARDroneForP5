@@ -60,11 +60,11 @@ void keyPressed(){
       ardrone.goLeft();//左
     }else if(keyCode==RIGHT){
       ardrone.goRight();//右
-    }/*else if(keyCode==SHIFT){
+    }else if(keyCode==SHIFT){
       ardrone.takeOff();//離陸，離陸した状態でないと移動は出来ない．
     }else if(keyCode==CONTROL){
       ardrone.landing();//着陸
-    }*/
+    }
   }else{
     if(key=='s'){
       ardrone.stop();//停止
@@ -77,13 +77,13 @@ void keyPressed(){
     }else if(key=='d'){
       ardrone.down();//下降
     }else if(key=='1'){
-      ardrone.setCameraHorizontal();
+      ardrone.setHorizontalCamera();
     }else if(key=='2'){
-      ardrone.setCameraHorizontalInVertical();//前カメラとお腹カメラ
+      ardrone.setHorizontalCameraWithVertical();//前カメラとお腹カメラ
     }else if(key=='3'){
-      ardrone.setCameraVertical();//お腹カメラ
+      ardrone.setVerticalCamera();//お腹カメラ
     }else if(key=='4'){
-      ardrone.setCameraVerticalInHorizontal();//お腹カメラと前カメラ
+      ardrone.setVerticalCameraWithHorizontal();//お腹カメラと前カメラ
     }else if(key=='5'){
       ardrone.toggleCamera();//次のカメラ
     }

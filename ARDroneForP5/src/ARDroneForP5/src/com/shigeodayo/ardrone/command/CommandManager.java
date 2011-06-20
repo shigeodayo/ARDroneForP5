@@ -49,7 +49,7 @@ public class CommandManager extends AbstractManager{
 	}
 	
 	
-	public void setCameraHorizontal() {
+	public void setHorizontalCamera() {
 		//command="AT*ZAP="+(seq++)+",0";
 		command="AT*CONFIG="+(seq++)+",\"video:video_channel\",\"0\"";
 		continuance=false;
@@ -57,7 +57,7 @@ public class CommandManager extends AbstractManager{
 	}
 
 	
-	public void setCameraVertical() {
+	public void setVerticalCamera() {
 		//command="AT*ZAP="+(seq++)+",1";
 		command="AT*CONFIG="+(seq++)+",\"video:video_channel\",\"1\"";
 		continuance=false;
@@ -65,7 +65,7 @@ public class CommandManager extends AbstractManager{
 	}
 
 	
-	public void setCameraHorizontalInVertical() {
+	public void setHorizontalCameraWithVertical() {
 		//command="AT*ZAP="+(seq++)+",2";
 		command="AT*CONFIG="+(seq++)+",\"video:video_channel\",\"2\"";
 		continuance=false;
@@ -73,7 +73,7 @@ public class CommandManager extends AbstractManager{
 	}
 
 	
-	public void setCameraVerticalInHorizontal() {
+	public void setVerticalCameraWithHorizontal() {
 		//command="AT*ZAP="+(seq++)+",3";
 		command="AT*CONFIG="+(seq++)+",\"video:video_channel\",\"3\"";
 		continuance=false;

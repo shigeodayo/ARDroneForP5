@@ -324,6 +324,19 @@ public class ARDrone implements ARDroneInterface{
 		return manager.getSpeed();
 	}
 	
+	@Override
+	public void setMaxAltitude(int altitude){
+		if(manager!=null)
+			manager.setMaxAltitude(altitude);
+	}
+	
+	@Override
+	public void setMinAltitude(int altitude){
+		if(manager!=null)
+			manager.setMinAltitude(altitude);
+	}
+
+	
 	//update listeners
 	public void addImageUpdateListener(ImageListener imageListener){
 		this.imageListener=imageListener;

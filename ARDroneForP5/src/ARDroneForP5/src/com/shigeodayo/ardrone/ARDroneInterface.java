@@ -59,5 +59,9 @@ public interface ARDroneInterface {
 	//getter
 	public int getSpeed();
 	//setter
-	public void setSpeed(int speed);	
+	public void setSpeed(int speed);
+	
+	//set max/min altitude
+	public void setMaxAltitude(int altitude);
+	public void setMinAltitude(int altitude);
 }

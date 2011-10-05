@@ -18,6 +18,7 @@ package sample;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -106,14 +107,20 @@ public class ARDroneTest extends JFrame{
 		});
 		
 		addKeyListener(new KeyAdapter(){
+			public void keyReleased(KeyEvent e){
+				ardrone.stop();
+			}
 			public void keyPressed(KeyEvent e){
 				int key=e.getKeyCode();
+				int mod=e.getModifiersEx();
 				
-				switch(key){
-				case KeyEvent.VK_SHIFT:
+				shiftflag=false;
+				if((mod & InputEvent.SHIFT_DOWN_MASK)!=0){
 					shiftflag=true;
+				}
+
+				switch(key){
 				case KeyEvent.VK_ENTER:
-					//System.out.println("enter");
 					ardrone.takeOff();
 					break;
 				case KeyEvent.VK_SPACE:
@@ -185,7 +192,7 @@ public class ARDroneTest extends JFrame{
 				case KeyEvent.VK_E:
 					ardrone.reset();
 					break;
-				}
+				}	
 			}
 		});
 		

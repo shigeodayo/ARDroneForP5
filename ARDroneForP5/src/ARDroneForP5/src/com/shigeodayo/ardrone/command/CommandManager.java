@@ -40,9 +40,8 @@ public class CommandManager extends AbstractManager{
 	private String command=null;
 	
 	/** speed */
-	private float speed=0.1f;//max: 1.0f
-	
-	
+	private float speed=0.05f;//0.01f - 1.0f
+		
 	public CommandManager(InetAddress inetaddr){
 		this.inetaddr=inetaddr;
 		initialize();
@@ -98,6 +97,7 @@ public class CommandManager extends AbstractManager{
 
 	
 	public void takeOff() {
+		sendCommand("AT*FTRIM="+(seq++));
 		command="AT*REF=" + (seq++) + ",290718208";
 		continuance=false;
 		//setCommand("AT*REF=" + (seq++) + ",290718208", false);
@@ -220,8 +220,8 @@ public class CommandManager extends AbstractManager{
 	public void setSpeed(int speed) {
 		if(speed>100)
 			speed=100;
-		else if(speed<0)
-			speed=0;
+		else if(speed<1)
+			speed=1;
 
 		this.speed=(float) (speed/100.0);
 	}
@@ -280,6 +280,9 @@ public class CommandManager extends AbstractManager{
 					sendCommand("AT*PCMD="+(seq++)+",1,0,0,0,0"+CR+"AT*REF="+(seq++)+",290718208");
 				}
 			}
+			if(seq%5==0){//<2000ms
+				sendCommand("AT*COMWDG="+(seq++));
+			}
 		}
 	}
 	
@@ -295,6 +298,7 @@ public class CommandManager extends AbstractManager{
 		sendCommand("AT*PMODE="+(seq++)+",2"+CR+"AT*MISC="+(seq++)+",2,20,2000,3000"+CR+"AT*FTRIM="+(seq++)+CR+"AT*REF="+(seq++)+",290717696");//2-5
 		sendCommand("AT*PCMD="+(seq++)+",1,0,0,0,0"+CR+"AT*REF="+(seq++)+",290717696"+CR+"AT*COMWDG="+(seq++));//6-8
 		sendCommand("AT*PCMD="+(seq++)+",1,0,0,0,0"+CR+"AT*REF="+(seq++)+",290717696"+CR+"AT*COMWDG="+(seq++));//6-8
+		sendCommand("AT*FTRIM="+(seq++));
 		System.out.println("Initialize completed!");
 	}
 	
@@ -314,7 +318,7 @@ public class CommandManager extends AbstractManager{
 		DatagramPacket packet=new DatagramPacket(buffer, buffer.length, inetaddr, 5556);
 		try {
 			socket.send(packet);
-			Thread.sleep(20);
+			Thread.sleep(20);//<50ms			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {

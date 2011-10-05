@@ -34,18 +34,18 @@ import com.shigeodayo.ardrone.video.ImageListener;
 import com.shigeodayo.ardrone.video.VideoManager;
 
 public class ARDrone implements ARDroneInterface{
-	
+
 	/** default ip address */
 	private static final String IP_ADDRESS="192.168.1.1";
-	
+
 	private String ipaddr=null; 
 	private InetAddress inetaddr=null;
-		
+
 	//managers
 	private CommandManager manager=null;
 	private VideoManager videoManager=null;
 	private NavDataManager navdataManager=null;
-	
+
 	//listeners
 	private ImageListener imageListener=null;
 	private AttitudeListener attitudeListener=null;
@@ -64,7 +64,7 @@ public class ARDrone implements ARDroneInterface{
 	public ARDrone(String ipaddr){
 		this.ipaddr=ipaddr;
 	}
-	
+
 	/** connect to AR.Drone */
 	@Override
 	public boolean connect() {
@@ -323,20 +323,20 @@ public class ARDrone implements ARDroneInterface{
 			return -1;
 		return manager.getSpeed();
 	}
-	
+
 	@Override
 	public void setMaxAltitude(int altitude){
 		if(manager!=null)
 			manager.setMaxAltitude(altitude);
 	}
-	
+
 	@Override
 	public void setMinAltitude(int altitude){
 		if(manager!=null)
 			manager.setMinAltitude(altitude);
 	}
 
-	
+
 	//update listeners
 	public void addImageUpdateListener(ImageListener imageListener){
 		this.imageListener=imageListener;
@@ -369,7 +369,7 @@ public class ARDrone implements ARDroneInterface{
 	public void removeVelocityUpdateListener(){
 		velocityListener=null;
 	}
-	
+
 	/**
 	 * print error message
 	 * @param message
@@ -378,7 +378,7 @@ public class ARDrone implements ARDroneInterface{
 	public static void error(String message, Object obj){
 		System.err.println("["+obj.getClass()+"] "+message);
 	}
-	
+
 	private InetAddress getInetAddress(String ipaddr){
 		InetAddress inetaddr=null;
 		StringTokenizer st=new StringTokenizer(ipaddr, ".");

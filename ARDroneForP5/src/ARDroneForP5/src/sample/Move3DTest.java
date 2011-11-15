@@ -109,7 +109,7 @@ public class Move3DTest extends JFrame {
 				case KeyEvent.VK_LEFT:
 					if(shiftflag){
 						//ardrone.spinLeft();
-						ardrone.move3D(0, 0, 0, -10);
+						ardrone.move3D(0, 0, 0, 10);
 						shiftflag=false;
 					}else
 						ardrone.move3D(0, 10, 0, 0);
@@ -118,7 +118,7 @@ public class Move3DTest extends JFrame {
 				case KeyEvent.VK_RIGHT:
 					if(shiftflag){
 						//ardrone.spinRight();
-						ardrone.move3D(0, 0, 0, 10);
+						ardrone.move3D(0, 0, 0, -10);
 						shiftflag=false;
 					}else
 						ardrone.move3D(0, -10, 0, 0);

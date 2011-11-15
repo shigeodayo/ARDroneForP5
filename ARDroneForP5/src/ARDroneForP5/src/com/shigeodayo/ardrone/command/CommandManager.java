@@ -281,7 +281,7 @@ public class CommandManager extends AbstractManager{
 		else if(speedZ<-100)
 			speedZ=-100;
 		
-		command="AT*PCMD="+(seq++)+",1,"+intOfFloat(-speedY/100.0f)+","+intOfFloat(-speedX/100.0f)+","+intOfFloat(-speedZ/100.0f)+","+intOfFloat(speedSpin/100.0f)+"\r"+"AT*REF="+(seq++)+",290718208";
+		command="AT*PCMD="+(seq++)+",1,"+intOfFloat(-speedY/100.0f)+","+intOfFloat(-speedX/100.0f)+","+intOfFloat(-speedZ/100.0f)+","+intOfFloat(-speedSpin/100.0f)+"\r"+"AT*REF="+(seq++)+",290718208";
 		continuance=true;
 	}
 	

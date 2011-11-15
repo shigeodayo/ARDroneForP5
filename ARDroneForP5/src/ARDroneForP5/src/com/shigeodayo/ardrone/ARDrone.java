@@ -336,6 +336,11 @@ public class ARDrone implements ARDroneInterface{
 			manager.setMinAltitude(altitude);
 	}
 
+	@Override
+	public void move3D(int speedX, int speedY, int speedZ, int speedSpin) {
+		if(manager!=null)
+			manager.move3D(speedX, speedY, speedZ, speedSpin);
+	}
 
 	//update listeners
 	public void addImageUpdateListener(ImageListener imageListener){

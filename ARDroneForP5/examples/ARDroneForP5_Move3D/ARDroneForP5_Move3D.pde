@@ -9,7 +9,6 @@ ARDroneForP5 ardrone;
  *  @param speedY : the speed of y-axis, [-100,100]
  *  @param speedZ : the speed of z-axis, [-100,100]
  *  @param speedSpin : the speed of rotation, [-100,100]
- *  Please if you don't know the axis of the AR.Drone.
  */
 void setup(){
   size(320, 240);

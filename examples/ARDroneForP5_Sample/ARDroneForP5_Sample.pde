@@ -1,10 +1,4 @@
-import com.shigeodayo.ardrone.manager.*;
-import com.shigeodayo.ardrone.navdata.*;
-import com.shigeodayo.ardrone.utils.*;
 import com.shigeodayo.ardrone.processing.*;
-import com.shigeodayo.ardrone.command.*;
-import com.shigeodayo.ardrone.*;
-
 
 ARDroneForP5 ardrone;
 
@@ -34,7 +28,7 @@ void draw() {
   image(img, 0, 0);
 
   // print out AR.Drone information
-  // ardrone.printARDroneInfo();
+  ardrone.printARDroneInfo();
 
   // getting sensor information of AR.Drone
   float pitch = ardrone.getPitch();
@@ -72,7 +66,7 @@ void keyPressed() {
       ardrone.takeOff(); // take off, AR.Drone cannot move while landing
     } 
     else if (keyCode == CONTROL) {
-      ardrone.landing();/
+      ardrone.landing();
       // landing
     }
   } 

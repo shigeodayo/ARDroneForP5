@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<project default="main">
+	<property name="message" value="Building the .jar file."/>
+	<property name="src" location="src"/>
+	<property name="output" location="bin"/>
+	<property name="jarout" location="library"/>
+	<property name="jarname" value="ARDroneForP5.jar"/>
+	<property name="packagename" value="com/shigeodayo/ardrone"/>
+
+	<target name="main" depends="init, compile, compress">
+		<echo>
+			${message}
+		</echo>
+	</target>
+
+	<target name="init">
+			<mkdir dir="${output}"/>
+	</target>
+
+	<target name="compile">
+		<javac srcdir="${src}" destdir="${output}"/>
+	</target>
+
+	<target name="compress">
+		<jar destfile="${jarout}/${jarname}" basedir="${output}" includes="${packagename}/**" >
+			<fileset dir="./">
+				<include name="lib/core.jar"/>
+			</fileset>
+		</jar>
+	</target>
+</project>
+

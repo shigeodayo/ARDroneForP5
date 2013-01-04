@@ -28,6 +28,7 @@
 				<include name="lib/slf4j-api-1.7.2.jar"/>
 				<include name="lib/slf4j-jdk14-1.7.2.jar"/>
 				<include name="lib/xuggle-xuggler-5.4.jar"/>
+				<include name="lib/commons-net-3.2.jar"/>
 			</fileset>
 		</jar>
 	</target>

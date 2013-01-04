@@ -19,6 +19,7 @@ package com.shigeodayo.ardrone;
 
 public interface ARDroneInterface {
 
+	
 	// connection
 	public boolean connect();
 
@@ -82,16 +83,14 @@ public interface ARDroneInterface {
 
 	public void stop();
 
-	// getter
-	public int getSpeed();
+	public void move3D(int speedX, int speedY, int speedZ, int speedSpin);
 
-	// setter
+	// speed
+	public int getSpeed();
 	public void setSpeed(int speed);
 
-	// set max/min altitude
+	// set max altitude
 	public void setMaxAltitude(int altitude);
-
+	// set min altitude
 	public void setMinAltitude(int altitude);
-
-	public void move3D(int speedX, int speedY, int speedZ, int speedSpin);
 }

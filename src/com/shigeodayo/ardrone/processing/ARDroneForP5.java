@@ -29,6 +29,7 @@ import com.shigeodayo.ardrone.navdata.BatteryListener;
 import com.shigeodayo.ardrone.navdata.DroneState;
 import com.shigeodayo.ardrone.navdata.StateListener;
 import com.shigeodayo.ardrone.navdata.VelocityListener;
+import com.shigeodayo.ardrone.utils.ARDroneVersion;
 import com.shigeodayo.ardrone.video.ImageListener;
 
 /**
@@ -67,6 +68,25 @@ public class ARDroneForP5 extends ARDrone implements ImageListener,
 	 */
 	public ARDroneForP5(String ipaddr) {
 		super(ipaddr);
+	}
+
+	/**
+	 * constructor
+	 * 
+	 * @param ardroneType
+	 */
+	public ARDroneForP5(ARDroneVersion ardroneType) {
+		super(ardroneType);
+	}
+
+	/**
+	 * constructor
+	 * 
+	 * @param ipaddr
+	 * @param ardroneType
+	 */
+	public ARDroneForP5(String ipaddr, ARDroneVersion ardroneType) {
+		super(ipaddr, ardroneType);
 	}
 
 	@Override

@@ -48,9 +48,8 @@ public class ARDroneTest extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private ARDrone ardrone = null;
-	private boolean shiftflag = false;
 
-	private MyPanel myPanel;
+	private MyPanel myPanel = null;
 
 	public ARDroneTest() {
 		initialize();
@@ -61,7 +60,7 @@ public class ARDroneTest extends JFrame {
 		System.out.println("connect drone controller");
 		ardrone.connect();
 		System.out.println("connect drone navdata");
-		ardrone.connectNav();
+		//ardrone.connectNav();
 		System.out.println("connect drone video");
 		ardrone.connectVideo();
 		System.out.println("start drone");
@@ -82,7 +81,7 @@ public class ARDroneTest extends JFrame {
 			public void attitudeUpdated(float pitch, float roll, float yaw,
 					int altitude) {
 				System.out.println("pitch: " + pitch + ", roll: " + roll
-						+ ", yaw: " + yaw + ", altitude: " + altitude);
+				 + ", yaw: " + yaw + ", altitude: " + altitude);
 			}
 		});
 
@@ -96,14 +95,15 @@ public class ARDroneTest extends JFrame {
 		ardrone.addStateUpdateListener(new StateListener() {
 			@Override
 			public void stateChanged(DroneState state) {
-				System.out.println("state: " + state);
+				 //System.out.println("state: " + state);
 			}
 		});
 
 		ardrone.addVelocityUpdateListener(new VelocityListener() {
 			@Override
 			public void velocityChanged(float vx, float vy, float vz) {
-				System.out.println("vx: " + vx + ", vy: " + vy + ", vz: " + vz);
+				 System.out.println("vx: " + vx + ", vy: " + vy + ", vz: " +
+				 vz);
 			}
 		});
 
@@ -116,7 +116,7 @@ public class ARDroneTest extends JFrame {
 				int key = e.getKeyCode();
 				int mod = e.getModifiersEx();
 
-				shiftflag = false;
+				boolean shiftflag = false;
 				if ((mod & InputEvent.SHIFT_DOWN_MASK) != 0) {
 					shiftflag = true;
 				}
@@ -132,31 +132,27 @@ public class ARDroneTest extends JFrame {
 					ardrone.stop();
 					break;
 				case KeyEvent.VK_LEFT:
-					if (shiftflag) {
+					if (shiftflag)
 						ardrone.spinLeft();
-						shiftflag = false;
-					} else
+					else 
 						ardrone.goLeft();
 					break;
 				case KeyEvent.VK_RIGHT:
-					if (shiftflag) {
+					if (shiftflag)
 						ardrone.spinRight();
-						shiftflag = false;
-					} else
+					else
 						ardrone.goRight();
 					break;
 				case KeyEvent.VK_UP:
-					if (shiftflag) {
+					if (shiftflag)
 						ardrone.up();
-						shiftflag = false;
-					} else
+					else
 						ardrone.forward();
 					break;
 				case KeyEvent.VK_DOWN:
-					if (shiftflag) {
+					if (shiftflag)
 						ardrone.down();
-						shiftflag = false;
-					} else
+					else
 						ardrone.backward();
 					break;
 				case KeyEvent.VK_1:
@@ -243,7 +239,7 @@ public class ARDroneTest extends JFrame {
 				thisClass.addWindowListener(new WindowAdapter() {
 					@Override
 					public void windowOpened(WindowEvent e) {
-						System.out.println("WindowOpened");
+						// System.out.println("WindowOpened");
 					}
 
 					@Override

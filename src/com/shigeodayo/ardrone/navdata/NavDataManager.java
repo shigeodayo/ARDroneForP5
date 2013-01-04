@@ -24,11 +24,11 @@ import java.nio.ByteBuffer;
 
 import com.shigeodayo.ardrone.command.CommandManager;
 import com.shigeodayo.ardrone.manager.AbstractManager;
-import com.shigeodayo.ardrone.utils.ARDroneUtils;
+import com.shigeodayo.ardrone.utils.ARDroneConstants;
 
-public class NavDataManager extends AbstractManager {
+public abstract class NavDataManager extends AbstractManager {
 
-	private CommandManager manager = null;
+	protected CommandManager manager = null;
 
 	// listeners
 	private AttitudeListener attitudeListener = null;
@@ -59,10 +59,8 @@ public class NavDataManager extends AbstractManager {
 
 	@Override
 	public void run() {
-		ticklePort(ARDroneUtils.NAV_PORT);
-		manager.enableDemoData();
-		ticklePort(ARDroneUtils.NAV_PORT);
-		manager.sendControlAck();
+		initializeDrone();
+		
 		NavDataParser parser = new NavDataParser();
 
 		parser.setAttitudeListener(attitudeListener);
@@ -72,9 +70,9 @@ public class NavDataManager extends AbstractManager {
 
 		while (true) {
 			try {
-				ticklePort(ARDroneUtils.NAV_PORT);
+				ticklePort(ARDroneConstants.NAV_PORT);
 				DatagramPacket packet = new DatagramPacket(new byte[1024],
-						1024, inetaddr, 5554);
+						1024, inetaddr, ARDroneConstants.NAV_PORT);
 
 				socket.receive(packet);
 
@@ -89,4 +87,6 @@ public class NavDataManager extends AbstractManager {
 			}
 		}
 	}
+	
+	protected abstract void initializeDrone();
 }

@@ -25,9 +25,8 @@ public class Move3DTest extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private ARDrone ardrone = null;
-	private boolean shiftflag = false;
 
-	private MyPanel myPanel;
+	private MyPanel myPanel = null;
 
 	public Move3DTest() {
 		initialize();
@@ -93,7 +92,7 @@ public class Move3DTest extends JFrame {
 				int key = e.getKeyCode();
 				int mod = e.getModifiersEx();
 
-				shiftflag = false;
+				boolean shiftflag = false;
 				if ((mod & InputEvent.SHIFT_DOWN_MASK) != 0) {
 					shiftflag = true;
 				}

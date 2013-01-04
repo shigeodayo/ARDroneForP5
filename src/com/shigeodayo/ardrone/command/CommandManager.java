@@ -25,11 +25,12 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import com.shigeodayo.ardrone.manager.AbstractManager;
+import com.shigeodayo.ardrone.utils.ARDroneConstants;
 
-public class CommandManager extends AbstractManager {
+public abstract class CommandManager extends AbstractManager {
 
-	private static final String CR = "\r";
-	private static final String SEQ = "$SEQ$";
+	protected static final String CR = "\r";
+	protected static final String SEQ = "$SEQ$";
 
 	private static int seq = 1;
 
@@ -37,15 +38,21 @@ public class CommandManager extends AbstractManager {
 	private IntBuffer ib = null;
 
 	private boolean landing = true;
+	
 	private boolean continuance = false;
 	private String command = null;
 
 	/** speed */
 	private float speed = 0.05f; // 0.01f - 1.0f
 
+	protected String VIDEO_CODEC;
+
 	public CommandManager(InetAddress inetaddr) {
 		this.inetaddr = inetaddr;
-		initialize();
+
+		ByteBuffer bb = ByteBuffer.allocate(4);
+		fb = bb.asFloatBuffer();
+		ib = bb.asIntBuffer();
 	}
 
 	public void setHorizontalCamera() {
@@ -77,6 +84,7 @@ public class CommandManager extends AbstractManager {
 		command = "AT*REF=" + SEQ + ",290717696";
 		continuance = false;
 		landing = true;
+		//System.out.println("landing");
 	}
 
 	public void takeOff() {
@@ -84,6 +92,7 @@ public class CommandManager extends AbstractManager {
 		command = "AT*REF=" + SEQ + ",290718208";
 		continuance = false;
 		landing = false;
+		//System.out.println("take off");
 	}
 
 	public void reset() {
@@ -126,8 +135,8 @@ public class CommandManager extends AbstractManager {
 	}
 
 	public void spinLeft() {
-		command = "AT*PCMD=" + SEQ + ",1,0,0,0," + intOfFloat(-speed)
-				+ "\r" + "AT*REF=" + SEQ + ",290718208";
+		command = "AT*PCMD=" + SEQ + ",1,0,0,0," + intOfFloat(-speed) + "\r"
+				+ "AT*REF=" + SEQ + ",290718208";
 		continuance = true;
 	}
 
@@ -208,6 +217,12 @@ public class CommandManager extends AbstractManager {
 		continuance = false;
 	}
 
+	public void disableBootStrap() {
+		command = "AT*CONFIG_IDS=" + SEQ + ",\"" + ARDroneConstants.SESSION_ID
+				+ "\",\"" + ARDroneConstants.PROFILE_ID + "\",\""
+				+ ARDroneConstants.APPLICATION_ID + "\"" + CR;
+	}
+
 	public void sendControlAck() {
 		command = "AT*CTRL=" + SEQ + ",0";
 		continuance = false;
@@ -251,8 +266,8 @@ public class CommandManager extends AbstractManager {
 		else if (speedZ < -100)
 			speedZ = -100;
 
-		command = "AT*PCMD=" + SEQ + ",1," + intOfFloat(-speedY / 100.0f)
-				+ "," + intOfFloat(-speedX / 100.0f) + ","
+		command = "AT*PCMD=" + SEQ + ",1," + intOfFloat(-speedY / 100.0f) + ","
+				+ intOfFloat(-speedX / 100.0f) + ","
 				+ intOfFloat(-speedZ / 100.0f) + ","
 				+ intOfFloat(-speedSpin / 100.0f) + "\r" + "AT*REF=" + SEQ
 				+ ",290718208";
@@ -261,10 +276,11 @@ public class CommandManager extends AbstractManager {
 
 	@Override
 	public void run() {
-		initARDrone();
+		initializeDrone();
 		while (true) {
 			if (this.command != null) {
-				sendCommand();
+				// sendCommand();
+				sendCommand(this.command);
 				if (!continuance) {
 					command = null;
 				}
@@ -277,55 +293,53 @@ public class CommandManager extends AbstractManager {
 							+ "AT*REF=" + SEQ + ",290718208");
 				}
 			}
-			if (seq % 5 == 0) { // <2000ms
+
+			try {
+				Thread.sleep(20); // < 50ms
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			if (seq % 5 == 0) { // < 2000ms
 				sendCommand("AT*COMWDG=" + SEQ);
 			}
+
 		}
 	}
 
-	private void initialize() {
-		ByteBuffer bb = ByteBuffer.allocate(4);
-		fb = bb.asFloatBuffer();
-		ib = bb.asIntBuffer();
-	}
+	protected abstract void initializeDrone();
 
-	private void initARDrone() {
-		sendCommand("AT*CONFIG=" + SEQ
-				+ ",\"general:navdata_demo\",\"TRUE\"" + CR + "AT*FTRIM="
-				+ SEQ); // 1
-		sendCommand("AT*PMODE=" + SEQ + ",2" + CR + "AT*MISC=" + SEQ
-				+ ",2,20,2000,3000" + CR + "AT*FTRIM=" + SEQ + CR
-				+ "AT*REF=" + SEQ + ",290717696"); // 2-5
-		sendCommand("AT*PCMD=" + SEQ + ",1,0,0,0,0" + CR + "AT*REF="
-				+ SEQ + ",290717696" + CR + "AT*COMWDG=" + SEQ); // 6-8
-		sendCommand("AT*PCMD=" + SEQ + ",1,0,0,0,0" + CR + "AT*REF="
-				+ SEQ + ",290717696" + CR + "AT*COMWDG=" + SEQ); // 6-8
-		sendCommand("AT*FTRIM=" + SEQ);
-		System.out.println("Initialize completed!");
-	}
+	/*
+	 * private void initializeDrone() { sendCommand("AT*CONFIG=" + SEQ +
+	 * ",\"general:navdata_demo\",\"TRUE\"" + CR + "AT*FTRIM=" + SEQ); // 1
+	 * sendCommand("AT*PMODE=" + SEQ + ",2" + CR + "AT*MISC=" + SEQ +
+	 * ",2,20,2000,3000" + CR + "AT*FTRIM=" + SEQ + CR + "AT*REF=" + SEQ +
+	 * ",290717696"); // 2-5 sendCommand("AT*PCMD=" + SEQ + ",1,0,0,0,0" + CR +
+	 * "AT*REF=" + SEQ + ",290717696" + CR + "AT*COMWDG=" + SEQ); // 6-8
+	 * sendCommand("AT*PCMD=" + SEQ + ",1,0,0,0,0" + CR + "AT*REF=" + SEQ +
+	 * ",290717696" + CR + "AT*COMWDG=" + SEQ); // 6-8 sendCommand("AT*FTRIM=" +
+	 * SEQ); //System.out.println("Initialize completed!"); }
+	 */
 
-	private void sendCommand() {
-		sendCommand(this.command);
-	}
-
-	private synchronized void sendCommand(String command) {
+	protected synchronized void sendCommand(String command) {
 		int seqIndex = -1;
 		while ((seqIndex = command.indexOf(SEQ)) != -1)
 			command = command.substring(0, seqIndex) + (seq++)
 					+ command.substring(seqIndex + SEQ.length());
 
 		byte[] buffer = (command + CR).getBytes();
-		// System.out.println(command);
+		//System.out.println(command);
 		DatagramPacket packet = new DatagramPacket(buffer, buffer.length,
-				inetaddr, 5556);
+				inetaddr, ARDroneConstants.PORT);
+
 		try {
 			socket.send(packet);
-			Thread.sleep(20); // < 50ms
+			 //Thread.sleep(20); // < 50ms
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (InterruptedException e) {
+		} /*catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	private int intOfFloat(float f) {

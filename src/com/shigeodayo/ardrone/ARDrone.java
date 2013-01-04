@@ -23,20 +23,25 @@ import java.net.UnknownHostException;
 import java.util.StringTokenizer;
 
 import com.shigeodayo.ardrone.command.CommandManager;
+import com.shigeodayo.ardrone.command.CommandManager1;
+import com.shigeodayo.ardrone.command.CommandManager2;
 import com.shigeodayo.ardrone.navdata.AttitudeListener;
 import com.shigeodayo.ardrone.navdata.BatteryListener;
 import com.shigeodayo.ardrone.navdata.DroneState;
 import com.shigeodayo.ardrone.navdata.NavDataManager;
+import com.shigeodayo.ardrone.navdata.NavDataManager1;
+import com.shigeodayo.ardrone.navdata.NavDataManager2;
 import com.shigeodayo.ardrone.navdata.StateListener;
 import com.shigeodayo.ardrone.navdata.VelocityListener;
-import com.shigeodayo.ardrone.utils.ARDroneUtils;
+import com.shigeodayo.ardrone.utils.ARDroneConstants;
+import com.shigeodayo.ardrone.utils.ARDroneInfo;
+import com.shigeodayo.ardrone.utils.ARDroneVersion;
 import com.shigeodayo.ardrone.video.ImageListener;
 import com.shigeodayo.ardrone.video.VideoManager;
+import com.shigeodayo.ardrone.video.VideoManager1;
+import com.shigeodayo.ardrone.video.VideoManager2;
 
 public class ARDrone implements ARDroneInterface {
-
-	/** default ip address */
-	private static final String IP_ADDRESS = "192.168.1.1";
 
 	private String ipaddr = null;
 	private InetAddress inetaddr = null;
@@ -53,9 +58,11 @@ public class ARDrone implements ARDroneInterface {
 	private StateListener stateListener = null;
 	private VelocityListener velocityListener = null;
 
+	private ARDroneVersion ardroneVersion = null;
+
 	/** constructor */
 	public ARDrone() {
-		this(IP_ADDRESS);
+		this(ARDroneConstants.IP_ADDRESS, null);
 	}
 
 	/**
@@ -64,17 +71,61 @@ public class ARDrone implements ARDroneInterface {
 	 * @param ipaddr
 	 */
 	public ARDrone(String ipaddr) {
-		this.ipaddr = ipaddr;
+		this(ipaddr, null);
 	}
 
+	/**
+	 * constructor
+	 * 
+	 * @param ardroneVersion
+	 */
+	public ARDrone(ARDroneVersion ardroneVersion) {
+		this(ARDroneConstants.IP_ADDRESS, ardroneVersion);
+	}
+
+	/**
+	 * constructor
+	 * 
+	 * @param ipaddr
+	 * @param ardroneVersion
+	 */
+	public ARDrone(String ipaddr, ARDroneVersion ardroneVersion) {
+		this.ipaddr = ipaddr;
+		this.ardroneVersion = ardroneVersion;
+		/*System.out.println("hoge");
+		if (ardroneVersion == null)
+			ardroneVersion = new ARDroneInfo().getDroneVersion();
+		System.out.println("AR.Drone version:" + ardroneVersion);*/
+	}
+
+
+	
 	/** connect to AR.Drone */
 	@Override
 	public boolean connect() {
+		return connect(false);
+	}
+
+	private boolean connect(boolean useHighRezVideoStreaming) {
 		if (inetaddr == null) {
 			inetaddr = getInetAddress(ipaddr);
 		}
-		manager = new CommandManager(inetaddr);
-		return manager.connect(ARDroneUtils.PORT);
+		if (ardroneVersion == null)
+			ardroneVersion = new ARDroneInfo().getDroneVersion();			
+		
+		//System.out.println("(connect) AR.Drone version:" + ardroneVersion);
+
+		if (ardroneVersion == ARDroneVersion.ARDRONE1)
+			manager = new CommandManager1(inetaddr, useHighRezVideoStreaming);
+		else if (ardroneVersion == ARDroneVersion.ARDRONE2)
+			manager = new CommandManager2(inetaddr, useHighRezVideoStreaming);
+		else {
+			error("Cannot create Control manager", this);
+			error("Maybe this is not AR.Drone?", this);
+			return false;
+		}
+
+		return manager.connect(ARDroneConstants.PORT);
 	}
 
 	/** connect video */
@@ -83,7 +134,18 @@ public class ARDrone implements ARDroneInterface {
 		if (inetaddr == null) {
 			inetaddr = getInetAddress(ipaddr);
 		}
-		videoManager = new VideoManager(inetaddr, manager);
+		//System.out.println("(connect video) AR.Drone version:" + ardroneVersion);
+
+		if (ardroneVersion == ARDroneVersion.ARDRONE1) {
+			videoManager = new VideoManager1(inetaddr, manager);
+		} else if (ardroneVersion == ARDroneVersion.ARDRONE2) {
+			videoManager = new VideoManager2(inetaddr, manager);
+		} else {
+			error("Cannot create Video manager", this);
+			error("Maybe this is not AR.Drone?", this);
+			return false;
+		}
+
 		videoManager.setImageListener(new ImageListener() {
 			@Override
 			public void imageUpdated(BufferedImage image) {
@@ -92,7 +154,7 @@ public class ARDrone implements ARDroneInterface {
 				}
 			}
 		});
-		return videoManager.connect(ARDroneUtils.VIDEO_PORT);
+		return videoManager.connect(ARDroneConstants.VIDEO_PORT);
 	}
 
 	/** connect navdata */
@@ -101,7 +163,18 @@ public class ARDrone implements ARDroneInterface {
 		if (inetaddr == null) {
 			inetaddr = getInetAddress(ipaddr);
 		}
-		navdataManager = new NavDataManager(inetaddr, manager);
+		
+		//System.out.println("(connect nav) AR.Drone version:" + ardroneVersion);
+
+		if (ardroneVersion == ARDroneVersion.ARDRONE1) {
+			navdataManager = new NavDataManager1(inetaddr, manager);
+		} else if (ardroneVersion == ARDroneVersion.ARDRONE2) {
+			navdataManager = new NavDataManager2(inetaddr, manager);
+		} else {
+			error("Cannot create NavData manager", this);
+			error("Maybe this is not AR.Drone?", this);
+			return false;
+		}
 		navdataManager.setAttitudeListener(new AttitudeListener() {
 			@Override
 			public void attitudeUpdated(float pitch, float roll, float yaw,
@@ -137,7 +210,7 @@ public class ARDrone implements ARDroneInterface {
 			}
 		});
 
-		return navdataManager.connect(ARDroneUtils.NAV_PORT);
+		return navdataManager.connect(ARDroneConstants.NAV_PORT);
 	}
 
 	@Override

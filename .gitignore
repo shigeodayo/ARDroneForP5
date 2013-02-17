@@ -3,5 +3,9 @@
 .project
 
 bin/*
+lib/*
+
 
 .settings/*
+
+src/examples/FtpClientExample.java

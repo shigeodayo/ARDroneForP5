@@ -1,24 +1,28 @@
-/*
- *
-  Copyright (c) <2011>, <Shigeo Yoshida>
-All rights reserved.
+/**
+   ARDroneForP5
+   https://github.com/shigeodayo/ARDroneForP5
+   Copyright (C) 2013, Shigeo YOSHIDA.
 
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-The names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+ http://www.apache.org/licenses/LICENSE-2.0
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
-MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
 package com.shigeodayo.ardrone.processing;
 
 import java.awt.Graphics2D;
+//import java.awt.Point;
 import java.awt.image.BufferedImage;
+//import java.awt.image.DataBufferInt;
+//import java.awt.image.Raster;
+//import java.awt.image.WritableRaster;
 
 import processing.core.PConstants;
 import processing.core.PImage;
@@ -56,6 +60,9 @@ public class ARDroneForP5 extends ARDrone implements ImageListener,
 	private float vy = 0.0f;
 	private float[] velocity = new float[2];
 
+	private PImage pimg = null;
+	//private WritableRaster wr = null;
+
 	/** constructor */
 	public ARDroneForP5() {
 		super();
@@ -92,6 +99,7 @@ public class ARDroneForP5 extends ARDrone implements ImageListener,
 	@Override
 	public boolean connectVideo() {
 		addImageUpdateListener(this);
+		// pimg = new PImage(320, 240);
 		return super.connectVideo();
 	}
 
@@ -190,13 +198,43 @@ public class ARDroneForP5 extends ARDrone implements ImageListener,
 		return battery;
 	}
 
-	private PImage convertToPImage(BufferedImage bimg) {
+	private PImage convertToPImage(BufferedImage bufImg) {
+		if (bufImg == null)
+			return null;
 		try {
-			PImage img = new PImage(bimg.getWidth(), bimg.getHeight(),
-					PConstants.ARGB);
-			bimg.getRGB(0, 0, img.width, img.height, img.pixels, 0, img.width);
-			img.updatePixels();
-			return img;
+
+			/*
+			 * if (pimg == null) { System.out.println("new pimage"); //pimg =
+			 * new PImage(bufImg); //pimg = new PImage(); pimg = new PImage(320,
+			 * 240, PConstants.ARGB); DataBufferInt dbi = new
+			 * DataBufferInt(pimg.pixels, pimg.pixels.length); wr =
+			 * Raster.createWritableRaster(bufImg.getSampleModel(), dbi, new
+			 * Point(0, 0)); } else { System.out.println("update pimage");
+			 * bufImg.copyData(wr); pimg.updatePixels(); }
+			 * 
+			 * return pimg;
+			 */
+
+			if (pimg == null) {
+				pimg = new PImage(bufImg.getWidth(), bufImg.getHeight(),
+						PConstants.ARGB);
+				//DataBufferInt dbi = new DataBufferInt(pimg.pixels,
+					//	pimg.pixels.length);
+				//wr = Raster.createWritableRaster(bufImg.getSampleModel(), dbi,
+						//new Point(0, 0));
+			}
+			//bufImg.copyData(wr);
+			bufImg.getRGB(0, 0, pimg.width, pimg.height, pimg.pixels, 0,
+					pimg.width);
+			pimg.updatePixels();
+			return pimg;
+
+			/*
+			 * PImage img = new PImage(bufImg.getWidth(), bufImg.getHeight(),
+			 * PConstants.ARGB); bufImg.getRGB(0, 0, img.width, img.height,
+			 * img.pixels, 0, img.width); img.updatePixels(); return img;
+			 */
+
 		} catch (Exception e) {
 			// System.err.println("Can't create image from buffer");
 			// e.printStackTrace();

@@ -3,7 +3,10 @@
 .project
 
 bin/*
-lib/*
+lib/commons-net-3.2.jar
+lib/slf4j-api-1.7.2.jar
+lib/slf4j-jdk14-1.7.2.jar
+lib/xuggle-xuggler-5.4.jar
 
 
 .settings/*

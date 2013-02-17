@@ -14,7 +14,7 @@ You have to add following libraries before running example sketches.
 - slf4j\-api\-\*.\*.\*.jar, slf4j\-jdk14\-\*.\*.\*.jar [[download link]](http://www.slf4j.org/download.html "[download link]")
 - commons\-net\-\*.\*.jar [[download link]](http://commons.apache.org/net/download_net.cgi "[download link]")
 
-(Currently, I am using xuggle\-xuggler\-5.4.jar, slf4j\-api\-1.7.2.jar, slf4j\-jdk14\-1.7.2.jar andcommons\-net\-3.2.jar.)
+(On 2013.2.17, I am using xuggle\-xuggler\-5.4.jar, slf4j\-api\-1.7.2.jar, slf4j\-jdk14\-1.7.2.jar andcommons\-net\-3.2.jar.)
 
 ## Lisence
 

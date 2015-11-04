@@ -250,7 +250,7 @@ public abstract class CommandManager extends AbstractManager {
 	}
 
 	/*
-	 * Thank you Tarqu’nio !!
+	 * Thank you Tarqunio !!
 	 */
 	public void move3D(int speedX, int speedY, int speedZ, int speedSpin) {
 		if (speedX > 100)

@@ -7,7 +7,7 @@ import java.io.DataInputStream;
 import java.nio.ByteBuffer;
 //import java.security.AllPermission;
 
-//Copyright © 2007-2011, PARROT SA, all rights reserved. 
+//Copyright  2007-2011, PARROT SA, all rights reserved. 
 
 //DISCLAIMER 
 //The APIs is provided by PARROT and contributors "AS IS" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability 

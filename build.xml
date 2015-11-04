@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <project default="main">
 	<property name="message" value="Building the .jar file."/>
-	<property name="src" location="src"/>
+	<property name="src" location="src/main/java"/>
 	<property name="output" location="bin"/>
 	<property name="jarout" location="library"/>
 	<property name="jarname" value="ARDroneForP5.jar"/>

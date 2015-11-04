@@ -1,8 +1,10 @@
 package com.shigeodayo.ardrone.video;
 
+import java.nio.ByteBuffer;
+
 //#region Copyright Notice
 
-//Copyright © 2007-2011, PARROT SA, all rights reserved. 
+//Copyright  2007-2011, PARROT SA, all rights reserved. 
 
 //DISCLAIMER 
 //The APIs is provided by PARROT and contributors "AS IS" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability 
@@ -43,7 +45,7 @@ package com.shigeodayo.ardrone.video;
 
 ///#//#endregion
 
-public class VideoImage {
+public class BufferedVideoImage {
 	// event EventHandler<ImageCompleteEventArgs> ImageComplete;
 
 	// [DllImport("Kernel32.dll", EntryPoint = "RtlMoveMemory")]
@@ -162,7 +164,7 @@ public class VideoImage {
 		return PixelRowSize;
 	}
 
-	private byte[] ImageStream;
+	private ByteBuffer ImageStream;
 
 	private ImageSlice ImageSlice;
 	private uint[] PixelData;
@@ -186,14 +188,14 @@ public class VideoImage {
 
 	// /#//#region ruction
 
-	public VideoImage() {
+	public BufferedVideoImage() {
 	}
 
 	// /#//#endregion
 
 	// /#//#region Methods
 
-	public void AddImageStream(byte[] stream) {
+	public void AddImageStream(ByteBuffer stream) {
 		ImageStream = stream;
 		ProcessStream();
 	}
@@ -222,7 +224,7 @@ public class VideoImage {
 		// Stopwatch stopWatch = new Stopwatch();
 		// stopWatch.Start();
 
-		while (!PictureComplete && StreamIndex < (ImageStream.length >> 2)) {
+		while (!PictureComplete && StreamIndex < (ImageStream.capacity() >> 2)) {
 			ReadHeader();
 
 			if (!PictureComplete) {
@@ -584,13 +586,13 @@ public class VideoImage {
 		return data;
 	}
 
-	private uint PeekStreamData(byte[] stream, int count) {
+	private uint PeekStreamData(ByteBuffer stream, int count) {
 		uint data = new uint(0);
 		uint streamField = StreamField;
 		int streamFieldBitIndex = StreamFieldBitIndex;
 
 		while (count > (32 - streamFieldBitIndex)
-				&& StreamIndex < (ImageStream.length >> 2)) {
+				&& StreamIndex < (ImageStream.capacity() >> 2)) {
 			data = (data.shiftLeft(32 - streamFieldBitIndex)).or(streamField
 					.shiftRight(streamFieldBitIndex));
 

@@ -1,6 +1,6 @@
 package com.shigeodayo.ardrone.video;
 
-//Copyright © 2007-2011, PARROT SA, all rights reserved. 
+//Copyright  2007-2011, PARROT SA, all rights reserved. 
 
 //DISCLAIMER 
 //The APIs is provided by PARROT and contributors "AS IS" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability 
@@ -19,14 +19,13 @@ package com.shigeodayo.ardrone.video;
 //- Neither the name of the PixVillage Team, nor the names of its contributors may be used to endorse or promote products derived from this software without 
 //specific prior written permission.
 
-public class ImageSlice {
-	MacroBlock[] MacroBlocks;
-
-	ImageSlice(int macroBlockCount) {
-		MacroBlocks = new MacroBlock[macroBlockCount];
-
-		for (int index = 0; index < macroBlockCount; index++) {
-			MacroBlocks[index] = new MacroBlock();
-		}
-	}
+public class PictureFormats {
+	// / <summary>
+	// / 176px x 144px
+	// / </summary>
+	public static final int Cif = 1;
+	// / <summary>
+	// / 320px x 240px
+	// / </summary>
+	public static final int Vga = 2;
 }

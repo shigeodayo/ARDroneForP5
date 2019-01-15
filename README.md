@@ -6,7 +6,7 @@ You can easily controll AR.Drone via WiFi using this library.
 
 ## Requirements
 
-You have to add floowing libraryies before running example sketches.
+You have to add floowing libraries before running example sketches.
 
 (In menu bar, Sketch \-&gt; Add File...)
 
